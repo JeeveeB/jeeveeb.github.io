@@ -77,6 +77,20 @@
     onButton.addEventListener('click', () => writeOnCharacteristic(1));
     offButton.addEventListener('click', () => writeOnCharacteristic(0));
 
+    var array = [];
+    navigator.geolocation.getCurrentPosition(function(position) {
+       var lat = position.coords.latitude;
+       var lon = position.coords.longitude;
+       array.push(lat, lon); 
+       locationCode()  
+    });
+
+    var loc;
+
+    function locationCode() {
+       loc = new Uint8Array(array)
+    }
+    
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
         if (!navigator.bluetooth) {
@@ -151,7 +165,11 @@
             bleServiceFound.getCharacteristic(ledCharacteristic)
             .then(characteristic => {
                 console.log("Found the LED characteristic: ", characteristic.uuid);
-                const data = new Uint8Array([value]);
+                if (value == 0) {
+                    const data = new Uint8Array([value]);
+                } else {
+                    const data = loc;
+                }
                 return characteristic.writeValue(data);
             })
             .then(() => {
