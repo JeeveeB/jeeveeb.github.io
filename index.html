@@ -88,9 +88,8 @@
     var loc;
 
     function locationCode() {
-       console.log('received location')
+       console.log('received location: ', array)
        loc = new Uint8Array(array)
-       console.log(loc)
     }
     
     // Check if BLE is available in your Browser
@@ -167,6 +166,7 @@
             bleServiceFound.getCharacteristic(ledCharacteristic)
             .then(characteristic => {
                 console.log("Found the LED characteristic: ", characteristic.uuid);
+                console.log("value: ", value);
                 if (value == 0) {
                     const data = new Uint8Array([value]);
                 } else {
