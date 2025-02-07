@@ -169,10 +169,11 @@
                 console.log("value: ", value);
                 if (value == 0) {
                     const data = new Uint8Array([value]);
+                    return characteristic.writeValue(data);
                 } else {
-                    const data = loc;
+                    return characteristic.writeValue(loc);
                 }
-                return characteristic.writeValue(data);
+
             })
             .then(() => {
                 latestValueSent.innerHTML = value;
