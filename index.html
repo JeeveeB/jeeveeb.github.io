@@ -29,7 +29,7 @@
             </div>
 
             <div class="card">
-                <h2>Control GPIO 2</h2>
+                <h2>Set anchor location</h2>
                 <button id="onButton" class="onButton">ON</button>
                 <button id="offButton" class="offButton">OFF</button>
                 <p class="gray-label">Last value sent: <span id="valueSent"></span></p>
@@ -77,11 +77,10 @@
     onButton.addEventListener('click', () => writeOnCharacteristic(1));
     offButton.addEventListener('click', () => writeOnCharacteristic(0));
 
-    var array = [];
+    var array = new Float32Array(2);
     navigator.geolocation.getCurrentPosition(function(position) {
-       var lat = position.coords.latitude;
-       var lon = position.coords.longitude;
-       array.push(lat, lon); 
+       array[0] = position.coords.latitude;
+       array[1] = position.coords.longitude;
        locationCode()  
     });
 
